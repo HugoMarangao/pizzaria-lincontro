@@ -29,7 +29,7 @@ const ApresentacaoProduto = ({ produto,onAddToCart }) => {
       <p className={styles.precoProduto}>{produto.preco}€</p>
       <textarea
                 className={styles.textarea}
-                placeholder="observacao" 
+                placeholder="osservazioni" 
                 value={desejo}
                 onChange={(e) => setDesejo(e.target.value)}
      ></textarea>
@@ -41,7 +41,7 @@ const ApresentacaoProduto = ({ produto,onAddToCart }) => {
           onChange={(e) => setQuantidade(e.target.value)} 
           min="1"
         />
-        <button  className={styles.button} onClick={handleAddToCart}>Adicionar ao Carrinho</button>
+        <button  className={styles.button} onClick={handleAddToCart}>Aggiungi al Carrello</button>
       </div>
     </div>
   );

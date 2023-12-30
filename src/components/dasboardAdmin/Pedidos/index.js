@@ -54,11 +54,11 @@ const selecionarPedido = (pedido) => {
           <table>
             <thead>
               <tr>
-                <th>ID do Pedido</th>
+                <th>ID Ordine</th>
                 <th>Cliente</th>
-                <th>Endereço</th>
-                <th>Total</th>
-                <th>Status</th>
+                <th>Indirizzo</th>
+                <th>Totale</th>
+                <th>Stato</th>
               </tr>
             </thead>
             <tbody>
@@ -74,9 +74,9 @@ const selecionarPedido = (pedido) => {
                       value={pedido.status} 
                       onChange={(e) => atualizarStatus(pedido.id, e.target.value)}
                     >
-                      <option value="preparando">Preparando</option>
+                      <option value="preparazione">In Preparazione</option>
                       <option value="pronto">Pronto</option>
-                      <option value="enviado">Enviado</option>
+                      <option value="inviato">Inviato</option>
                     </select>
                   </td>
                 </tr>
@@ -94,8 +94,8 @@ const selecionarPedido = (pedido) => {
               <thead>
                 <tr>
                   <th>Nome</th>
-                  <th>Quantidade</th>
-                  <th>Desejo</th>
+                  <th>Quantità</th>
+                  <th>Desiderio</th>
                 </tr>
               </thead>
               <tbody>
@@ -127,7 +127,7 @@ const selecionarPedido = (pedido) => {
       </div>
       <Rotas href={'/'}>
         <div className={styles.retornar}>
-          <h1>Sair</h1>
+          <h1>Uscire</h1>
         </div>
       </Rotas>
     </div>

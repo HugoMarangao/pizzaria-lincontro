@@ -13,6 +13,7 @@ import {
 import CustomModal from '../Config/Modale';
 import { toast } from 'react-toastify';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { GoTrash } from "react-icons/go";
 
 export default function ApresentacaoCarrinho() {
 
@@ -126,8 +127,8 @@ export default function ApresentacaoCarrinho() {
 
   return (
     <div className={styles.container}>
-      <h1>Meu Carrinho</h1>
-      <p style={{textAlign:"end",marginRight:10}}>preco</p>
+      <h1>Il Mio Carrello</h1>
+      <p style={{textAlign:"end",marginRight:10}}>prezzo</p>
       {cartItems.length > 0 ? (
         <div className={styles.itemsContainer}>
           {cartItems.map((item, index) => (
@@ -136,11 +137,11 @@ export default function ApresentacaoCarrinho() {
               <div className={styles.itemDetails}>
                 <div style={{display:"flex",justifyContent:"space-between"}}>
                   <p className={styles.itemName}>{item.nome}</p>
-                  <p className={styles.itemPrice}>R$ {item.preco}</p>
+                  <p className={styles.itemPrice}>{item.preco}€</p>
                 </div>
-                <p >desejo: {item.desejo}</p>
+                <p >osservazioni: {item.desejo}</p>
                 <div className={styles.itemQuantity}>
-                  <p>quantidade:</p>
+                  <p>quantità:</p>
                 <input 
                   type="number" 
                   value={item.quantidade} 
@@ -152,7 +153,7 @@ export default function ApresentacaoCarrinho() {
                   className={styles.removeButton}
                   onClick={() => handleRemoveItem(item)}
                 >
-                  Remover
+                  <GoTrash size={25} color='white'/>
                 </button>
                 </div>
                 
@@ -161,13 +162,13 @@ export default function ApresentacaoCarrinho() {
             </div>
           ))}
           <div className={styles.total}>
-            <h2>Valor Total: R$ {total.toFixed(2)}</h2>
+            <h2>Totale:  {total.toFixed(2)}€</h2>
             {isLoggedIn ? 
-            <button className={styles.button} onClick={() => openModal()}>Finalizar Compra</button> : 
+            <button className={styles.button} onClick={() => openModal()}>Concludi Acquisto</button> : 
             <Rotas href={'/Login/logar'} >
                 
                   <h1 className={styles.buttonRota}>
-                    Fazer Login
+                    Accedi
                   </h1>
                 
             </Rotas>
@@ -197,7 +198,7 @@ export default function ApresentacaoCarrinho() {
                         />
                     
                     
-                    <button type="submit" disabled={!stripe}>Pagar</button>
+                    <button className={styles.button} type="submit" disabled={!stripe}>Pagar</button>
                 </form>
             </div>
           </div>
@@ -205,7 +206,7 @@ export default function ApresentacaoCarrinho() {
         </div>
       ) : (
         <div className={styles.itemsContainer}>
-        <p className={styles.itemName} style={{padding:10,}}>Seu carrinho está vazio.</p>
+        <p className={styles.itemName} style={{padding:10,}}>Il tuo carrello è vuoto.</p>
         </div>
       )}
     </div>

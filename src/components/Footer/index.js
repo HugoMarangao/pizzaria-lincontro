@@ -19,17 +19,17 @@ const Footer = () => {
   return (
     <div className={styles.container}>
       <div className={styles.chamada}>
-        <h1>Cresca com a gente</h1>
+        <h1>Cresci con noi</h1>
       </div>
       <div className={styles.bottomrow}>
       <div className={styles.links}>
        
         <div className={styles.logo}/>
         <Rotas href="/" active={router.pathname === '/'}>
-          inicio
+          inizio
         </Rotas>
         <Rotas href="/Produtos" active={router.pathname === "/Produtos"}>
-          produtos
+          prodotti
         </Rotas>
         <Rotas href="/SobreNois" active={router.pathname === "/SobreNois"}>
           categoria
@@ -65,16 +65,16 @@ const Footer = () => {
       </button>
         </div>
         <Rotas href="https://www.youtube.com/@LHWeb/featured" active={router.pathname === '/tutoriais'}>
-          tutoriais
+          tutorial
         </Rotas>
         <Rotas href="/Cerca" active={router.pathname === "/chisiamo"}>
           blog
         </Rotas>
         <Rotas href="/port" active={router.pathname === "/port"}>
-          termos de uso
+          termini di utilizzo
         </Rotas>
         <Rotas href="/contati" active={router.pathname === "/contati"}>
-          politica de privacidade
+         politica della privacy
         </Rotas>   
       </div>
       </div>

@@ -27,30 +27,31 @@ export default function MenuUser({ activeComponent,setActiveComponent }) {
 
   return (
     <div className={styles.container}>
-     <h1>Seja Bem-vindo(a) {user?.nome}</h1>
+     <h1>Benvenuto(a) {user?.nome}</h1>
      <div 
         className={`${styles.Rotas} ${activeComponent === 'principal' ? styles.active : ''}`} 
         onClick={() => setActiveComponent('principal')}
       >
         <FaHome className={styles.icon}/>
-        <span>Principal</span>
+        <span>Principale</span>
       </div>
       <div 
         className={`${styles.Rotas} ${activeComponent === 'pedidos' ? styles.active : ''}`} 
         onClick={() => handleSetActiveComponent('pedidos')}
       >
         <FaBuilding className={styles.icon}/>
-        <span>Pedidos</span>
+        <span>Ordini</span>
+
       </div>
       <div 
         className={`${styles.Rotas} ${activeComponent === 'suporte' ? styles.active : ''}`} 
         onClick={() => handleSetActiveComponent('suporte')}
       >
         <FaQuestionCircle className={styles.icon}/>
-        <span>Suporte</span>
+        <span>Supporto</span>
       </div>
       <div className={styles.logoutButton}>
-        <button onClick={handleLogout}><FiLogOut/>Logout</button>
+        <button onClick={handleLogout}><FiLogOut/>Esci</button>
       </div>
     </div>
   );

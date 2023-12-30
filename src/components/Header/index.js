@@ -26,7 +26,7 @@ const Header = () => {
       return (
         <Rotas href={dashboardPath} active={router.pathname === dashboardPath}>
           <div style={{display:"flex", alignItems:"center",justifyContent:"center"}}>
-            <FiUser size={35}/> Minha Conta
+            <FiUser size={35}/> Il Mio Account
           </div>
           
         </Rotas>
@@ -35,7 +35,7 @@ const Header = () => {
       return (
         <Rotas href="/Login/logar" active={router.pathname === '/Login/logar'}>
           <div style={{display:"flex", alignItems:"center",justifyContent:"center"}}>
-            <FiUser size={35}/> Minha Conta
+            <FiUser size={35}/> Il Mio Account
           </div>
         </Rotas>
       );
@@ -119,7 +119,7 @@ const Header = () => {
       <div style={{display:"flex", alignItems:"center",justifyContent:"center"}}>
         <FiSearch size={30}/>
           <input
-            placeholder='Buscar produto'
+            placeholder='Cerca prodotto'
             value={searchValue}
             onChange={handleSearchChange}
             className={styles.busca}
@@ -141,7 +141,7 @@ const Header = () => {
                 </Link>
               ))
             ) : (
-              <div>Nenhum item encontrado</div>
+              <div>Nessun articolo trovato</div>
             )}
           </div>
     
@@ -157,7 +157,7 @@ const Header = () => {
       {renderMyAccountLink()}
       <Rotas href="/carrinho" active={router.pathname === '/carrinho'} >
         <div style={{display:"flex", alignItems:"center",justifyContent:"center"}}>
-          <GiShoppingBag size={35}/> ({cartItems.length} itens)
+          <GiShoppingBag size={35}/> ({cartItems.length})
         </div>
       </Rotas>    
       </nav>

@@ -4,7 +4,9 @@ import { db } from '../Config/Sever/firebaseConfig';
 import { IoIosSync } from 'react-icons/io'; // Importe o ícone de spinner
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
+import 'swiper/css/navigation';
 import { useRouter } from 'next/router';
 
 export default function Catalogo() {
@@ -103,28 +105,33 @@ export default function Catalogo() {
       ) : (
       <div className={styles.catalogoContainer}>
         <div className={styles.filtro}>
-          <h1>Categorias -</h1>
+          <h1>Categorie -</h1>
           {nomesCategorias.map((nomeCategoria, index) => (
             <p key={index} onClick={() => handleCategoriaClick(nomeCategoria)}
                className={nomeCategoria === categoriaSelecionada ? styles.categoriaSelecionada : ''}>
               {nomeCategoria}
-            </p>
+              <div className={styles.LinhacategoriaTitulo}/>
+            </p>           
           ))}
+          
         </div>
   
         <div className={styles.swiperContainer}>
         {categorias.filter(categoria => categoriaSelecionada === '' || categoria.nome === categoriaSelecionada).map((categoria) => (
             <div key={categoria.nome}>
               <h2 className={styles.categoriaTitulo}>{categoria.nome}</h2>
+              <div className={styles.LinhacategoriaTitulo}/>
               <Swiper
-                spaceBetween={30}
-                slidesPerView={3}
-                breakpoints={{
-                  320: { slidesPerView: 1, spaceBetween:10 },
-                  480: { slidesPerView: 2, spaceBetween:15 },
-                  768: { slidesPerView: 3, spaceBetween:30 },
-                }}
-              >
+                    spaceBetween={30}
+                    slidesPerView={3.5}
+                    breakpoints={{
+                      320: { slidesPerView: 1.2, spaceBetween: 10 },
+                      480: { slidesPerView: 2.2, spaceBetween: 15 },
+                      768: { slidesPerView: 3.5, spaceBetween: 30 },
+                    }}
+                   
+                    
+                  >
                 {categoria.produtos.map((produto) => (
                   <SwiperSlide key={produto.id} className={styles.swiperSlide} onClick={() => handleProdutoClick(produto.id)}>
                     <div className={styles.produtoBox}>

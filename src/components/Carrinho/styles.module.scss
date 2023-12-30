@@ -1,7 +1,9 @@
 .container {
     max-width: 800px;
     margin: auto;
-    padding-top: 100px;
+    padding-top: 120px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   
   .itemsContainer {
@@ -56,6 +58,31 @@
     border-radius: 4px;
     cursor: pointer;
   }
+
+  .button {
+    width: 100%;
+    background-color: #f58f00; /* Cor do tema para o botão */
+    border: none; /* Remover borda padrão do botão */
+    border-radius: 8px; /* Bordas arredondadas para o botão */
+    color: #fff;
+    padding: 10px;
+    cursor: pointer; /* Cursor de mão para indicar ação clicável */
+    margin-top: 10px; /* Espaço acima do botão */
+    transition: background-color 0.3s; /* Transição suave para hover */
+  }
+
+  .button:hover {
+    background-color: #e25b00; /* Cor mais escura ao passar o mouse */
+  }
+
+  .cardElement {
+    border: 1px solid #dfe1e5; /* Subtle border color */
+    border-radius: 4px; /* Matching border radius */
+    padding: 10px 14px; /* Uniform padding */
+    font-size: 16px; /* Readable text size */
+    color: #202124; /* Professional text color */
+    margin: 10px;
+}
   
   .total {
     text-align: right;

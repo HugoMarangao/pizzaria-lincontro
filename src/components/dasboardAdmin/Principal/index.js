@@ -20,28 +20,28 @@ export default function Principal() {
       
       <div className={styles.containerbox}>
           <div className={styles.box}>
-            <h1>Adicione um novo Banner</h1>
-            <button onClick={() => openModal('banner')}>Adicionar Banner</button>
+            <h1>Aggiungi un nuovo Banner</h1>
+            <button onClick={() => openModal('banner')}>Aggiungi Banner</button>
         </div>
         <div className={styles.box}>
-            <h1>Adicione um novo Produto</h1>
-            <button onClick={() => openModal('produto')}>Adicionar Produto</button>
+            <h1>Aggiungi un nuovo Prodotto</h1>
+            <button onClick={() => openModal('produto')}>Aggiungi Prodotto</button>
         </div>
       </div>
       <div className={styles.containerbox}>
           <div className={styles.box1}>
-            <h1>Adicione uma nova Categoria</h1>
-            <button onClick={() => openModal('categoria')}>Adicionar Categoria</button>
+            <h1>Aggiungi una nuova Categoria</h1>
+            <button onClick={() => openModal('categoria')}>Aggiungi Categoria</button>
         </div>
         <div className={styles.box1}>
-            <h1>Envie uma notificacao</h1>
-            <button >Envie</button>
+            <h1>Invia una notifica</h1>
+            <button >Invia</button>
         </div>
       </div>
       <Rotas href={'/'} >
         <div className={styles.retornar}>
           <h1>
-           Sair
+            Esci
           </h1>
         </div>
       </Rotas>
