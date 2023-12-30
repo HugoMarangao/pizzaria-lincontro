@@ -1,0 +1,108 @@
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding-top: 100px;
+  }
+  
+  .itemsContainer {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .cartItem {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .itemImage {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 20px;
+  }
+  
+  .itemDetails {
+    flex-grow: 1;
+  }
+  
+  .itemName {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .itemInfo, .itemPrice {
+    margin-bottom: 5px;
+    text-align: end;
+  }
+  
+  .itemActions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .removeButton {
+    padding: 5px 10px;
+    margin-left: 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .total {
+    text-align: right;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    background: #f2f2f2;
+
+    .button{
+        background-color: #f44336;
+        padding: 15px;
+        border-radius: 8px;
+        color: #f2f2f2;
+        margin-top: 15px;
+    }
+    .buttonRota{
+      background-color: #f44336;
+      padding: 15px;
+      border-radius: 8px;
+      color: #f2f2f2;
+      margin-top: 15px;
+  }
+  }
+  .itemQuantity {
+    display: flex;
+    align-items: center; /* Centraliza os itens verticalmente */
+    gap: 5px; /* Espaço entre a etiqueta e o campo de entrada */
+  }
+  
+  .itemQuantity input[type="number"] {
+    -webkit-appearance: none; /* Remove a aparência padrão no Chrome, Safari */
+    -moz-appearance: textfield; /* Remove a aparência padrão no Firefox */
+    margin: 0; /* Remove margens padrão */
+    width: 60px; /* Largura do campo de entrada */
+    border: 1px solid #ccc; /* Bordas do campo de entrada */
+    border-radius: 4px; /* Bordas arredondadas para o campo de entrada */
+    padding: 5px 10px; /* Espaçamento interno para o texto dentro do campo de entrada */
+    text-align: center; /* Alinha o texto ao centro */
+  }
+  
+  .itemQuantity input[type="number"]::-webkit-inner-spin-button,
+  .itemQuantity input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Remove os botões de incremento e decremento no Chrome, Safari */
+  }
+  
+  .itemQuantity p {
+    margin: 0; /* Remove margens padrão do parágrafo */
+  }
+  
+  

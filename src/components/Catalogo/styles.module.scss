@@ -1,0 +1,124 @@
+.imageBanner{
+    background-image: url('/Images/icons.png');
+    background-position: center;
+    background-size: contain;
+    width: 100%;
+    height: auto;
+    padding: 30px;
+}
+.catalogoContainer{
+  display: flex;
+}
+.swiperContainer{
+  width: 80%;
+}
+.filtro{
+    background-color: #fff;
+    width: 20%;
+    height: 200px;
+    padding: 15px;
+    margin-right: 15px;
+    border: 1px solid black;
+    border-radius: 8px;
+
+    h1{
+        font-size: 25px;
+    }
+
+    p{
+      cursor: pointer;
+
+    }
+}
+.swiperSlide {
+  padding: 5px; /* Adiciona um pouco de espaço em torno de cada slide */
+}
+
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ajuste a altura conforme necessário */
+  width: 100%; /* Ajuste a largura conforme necessário */
+}
+
+.spinnerIcon {
+  font-size: 3rem; /* Aumente o tamanho do ícone */
+  animation: spin 2s linear infinite;
+  color: #f47200;
+}
+
+.categoriaSelecionada {
+  color: #f47200;
+  cursor: pointer;
+  /* Adicione estilos adicionais conforme necessário, como negrito ou sublinhado */
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .swiperSlide {
+    padding: 3px; /* Reduz o espaço em torno dos slides em telas menores */
+  }
+}
+
+@media (max-width: 768px) {
+  .filtro{
+    display: none;
+  }
+  .swiperContainer{
+    width: 100%;
+  }
+}
+
+.produtosContainer {
+    display: flex;
+    flex-wrap: wrap;
+   
+    gap: 20px; // Ajuste o espaço entre as caixas de produtos
+  }
+  
+  .produtoBox {
+    border-radius: 8px;
+    background-color: #fff; // ou qualquer outra cor de fundo
+    border: 1px solid #ccc; // uma borda leve, se necessário
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // sombra suave
+    width: 300px; // ou a largura que você deseja para a caixa de produto
+    
+  }
+  
+  .produtoImagem {
+    border-radius: 8px 0 8px 0 ;
+    height: 400px; // ajuste conforme necessário
+    background-size: cover;
+    background-position: center;
+    // outros estilos para a imagem...
+  }
+  
+  .produtoInfo {
+    padding: 10px;
+    // outros estilos para a seção de informações...
+  }
+  
+  .produtoCodigo,
+  .produtoNome,
+  .produtoPreco,
+  .produtoDescricao {
+    display: block; // ou outro display conforme necessário
+    // estilos adicionais para textos...
+  }
+
+  .produtoPreco{
+   
+    color: #f47200;
+    
+    font-size: 25px;
+  }
+
+ 
+
+  

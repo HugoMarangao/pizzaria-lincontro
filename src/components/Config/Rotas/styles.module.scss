@@ -1,0 +1,18 @@
+/* components/Link/styles.module.scss */
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link:hover {
+  color: #f47200;;
+}
+
+.active {
+  color: #f47200;;
+}
+
+/* Adicione este estilo */
+.scrolling .active {
+  color: #f47200;;
+}

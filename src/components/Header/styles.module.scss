@@ -1,0 +1,172 @@
+/* src/Componets/Header/styles.module.scss */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  padding: 1rem 1rem;
+  z-index: 1000;
+  background-color: #000000;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  color: #fdfdfd;
+  font-size: 18px;
+  font-weight: bold;
+  
+  .logoContainer {
+      margin: 0;
+      padding: 0;
+    }
+
+    .logo{
+      width: 180px;
+      height: 80px;
+      background-image: url('/Images/logo.png');
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .busca{
+      background-color: #000000;
+      border-bottom: 1px solid #ffffff;
+      margin-left: 3px;
+    }
+
+    .searchResults{
+      background-color: #000000;
+      height: auto;
+      padding: 30px;
+      width: 50%;
+      position: absolute;
+      color: #ffffff;
+      
+    }
+
+    .searchItem {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #ffffff;
+      color: #ffffff;
+      text-decoration: none; // Remove o sublinhado dos links
+    
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      
+      .productImage {
+        width: 80px; // ou o tamanho que você desejar
+        height: 80px; // ou o tamanho que você desejar
+        margin-right: 10px;
+        object-fit: cover; // Para manter a proporção da imagem
+      }
+    
+      .productName {
+        font-size: 2rem;
+        margin-bottom: 0.25rem;
+      }
+    
+      .productDescription {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+    
+      .productPrice {
+        font-size: 0.875rem;
+        color: #f47200;
+        font-weight: bold;
+      }
+    }
+    
+    
+}
+
+
+
+.header.scrolling {
+  background-color: #000000;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+
+
+.nav a:hover {
+  color: #f47200;
+}
+
+
+.header.scrolling .nav a:hover,
+.header.scrolling .nav a.active {
+  color: #f77f00 !important;
+}
+
+.header.showHeader {
+  transform: translateY(0);
+}
+
+.header.scrolling:not(.showHeader) {
+  transform: translateY(-100%);
+}
+
+
+
+@media (max-width: 768px) {
+  .header {
+    padding:10px 1rem;
+    
+  }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #0a0808;
+  }
+
+  .nav a {
+    padding: 1rem;
+  }
+
+  .mobileMenuOpen {
+    display: flex;
+  }
+
+  .menuIcon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .menuIcon span {
+    display: block;
+    height: 3px;
+    background-color: #ffffff;
+  }
+
+  .header.scrolling .menuIcon span {
+    background-color: #ffffff;
+  }
+  
+
+
+  
+}
+
+
+// Passo 4: Oculte o ícone do menu em telas maiores
+@media (min-width: 769px) {
+  .menuIcon {
+    display: none;
+  }
+}

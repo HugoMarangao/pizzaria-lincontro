@@ -1,0 +1,37 @@
+.container{
+    background-color:rgb(5, 4, 3);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: rgb(247, 247, 247);
+
+    h1{
+        font-size: 40px;
+
+    }
+
+    form{
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        color: #000;
+        input{
+            padding: 10px;
+            width: 500px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        button{
+            background-color: #ef6e04;
+            width: 80%;
+            margin: 0 auto;
+            border-radius: 10px;
+            color: aliceblue;
+            padding: 10px;
+        }
+    }
+}
+

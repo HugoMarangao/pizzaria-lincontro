@@ -1,0 +1,47 @@
+.container {
+    width: 15%;
+    height: 100vh;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px;
+    padding: 10px;
+    color: white;
+
+    span{
+      cursor: pointer;
+    }
+
+    span:hover{
+      color: #ef6e04;
+    }
+  
+    .Rotas {
+      display: flex;
+      padding: 15px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .Rotas.active {
+      color: #ef6e04; /* Cor do texto para o item ativo */
+    }
+    .icon{
+        margin-right: 10px;
+        font-size: 25px;
+    }
+
+  
+  
+    .logoutButton {
+      margin-top: auto;
+  
+      button {
+        display: flex;
+        align-items: center;
+        width: 100%;
+      }
+    }
+  }
+  
