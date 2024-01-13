@@ -1,10 +1,14 @@
 .apresentacaoProduto {
+   
   padding: 20px;
-  
+  height: 100vh;
+  margin: 0 auto;
+  max-width: 1600px;
 }
 
 /* Estilização do Swiper */
 .swiper {
+   
     margin-bottom: 20px;
     border-radius: 10px;
     overflow: hidden;

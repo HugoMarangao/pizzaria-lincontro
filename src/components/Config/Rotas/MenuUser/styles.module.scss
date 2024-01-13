@@ -1,3 +1,16 @@
+.menuButton {
+  display: none; /* Escondido por padrão */
+  position: fixed; /* Fixo na tela */
+  top: 10px; /* Ajuste conforme necessário */
+  left: 10px; /* Ajuste conforme necessário */
+  z-index: 1100; /* Acima do menu e outros elementos */
+  cursor: pointer;
+  color: #ef6e04;
+  font-size: 25px;
+  
+}
+
+
 .container {
     width: 15%;
     height: 100vh;
@@ -8,6 +21,8 @@
     font-size: 18px;
     padding: 10px;
     color: white;
+    transition: transform 0.3s ease-in-out; /* Adicione uma transição suave */
+    
 
     span{
       cursor: pointer;
@@ -43,5 +58,24 @@
         width: 100%;
       }
     }
+
   }
-  
+
+ /* Estilos para telas menores */
+@media (max-width: 768px) {
+  .menuButton {
+    display: block; /* Mostrar o botão em telas menores */
+  }
+
+  .container {
+   position: absolute;
+   left: -300px;
+    z-index: 1000; /* Sobrepor o conteúdo */
+    width: 35%; /* Ajuste a largura conforme necessário */
+    transition: transform 0.3s ease-in-out; /* Transição suave */
+  }
+
+  .container.menuVisible {
+    transform: translateX(300px); /* Deslizar para dentro da tela */
+  }
+}

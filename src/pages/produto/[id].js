@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Header from '@/components/Header';
 import ApresentacaoProduto from '@/components/ApresentacaoProduto';
+import Footer from '@/components/Footer';
 
 const ProdutoDetalhes = () => {
   const [produto, setProduto] = useState(null);
@@ -31,6 +32,7 @@ const ProdutoDetalhes = () => {
     <>
       <Header/>
       <ApresentacaoProduto produto={produto} />
+      <Footer/>
     </>
   );
 };

@@ -14,7 +14,14 @@ export default function Menu({ activeComponent, setActiveComponent }) {
   const handleSetActiveComponent = (component) => {
     setActiveComponent(component);
   };
-  
+
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+    console.log(isMenuVisible)
+  };
+
   const handleLogout = async () => {
     try {
       await signOut(authInstance);
@@ -25,7 +32,9 @@ export default function Menu({ activeComponent, setActiveComponent }) {
   };
 
   return (
-    <div className={styles.container}>
+    <>
+    <button className={styles.menuButton} onClick={toggleMenu}><FiMenu /></button>
+    <div className={`${styles.container} ${isMenuVisible ? styles.menuVisible : ''}`}>
      <h1>Benvenuto(a) {user?.nome}</h1>
      <div 
         className={`${styles.Rotas} ${activeComponent === 'principal' ? styles.active : ''}`} 
@@ -52,5 +61,6 @@ export default function Menu({ activeComponent, setActiveComponent }) {
         <button onClick={handleLogout}><FiLogOut/>Esci</button>
       </div>
     </div>
+    </>
   );
 }

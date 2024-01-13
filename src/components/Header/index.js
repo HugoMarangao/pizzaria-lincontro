@@ -111,6 +111,7 @@ const Header = () => {
   }, []);
 
   return (
+    <>
     <header className={`${styles.header} ${scrolling ? styles.scrolling : ''} ${scrollDirection === 'up' ? styles.showHeader : ''}`}> {/* Passo 4 */}
       <Rotas href="/" active={router.pathname === '/'}>
         <div className={styles.logo}/>
@@ -125,27 +126,7 @@ const Header = () => {
             className={styles.busca}
           />
         </div>
-        {searchValue && (
-      <div className={styles.searchResults}>
-            {searchResults.length > 0 ? (
-              searchResults.map((product) => (
-                <Link key={product.id} href={`/produto/${product.id}`} passHref>
-                  <div className={styles.searchItem}>
-                    <img src={product.imagens[0]} alt={product.nome} className={styles.productImage} />
-                    <div>
-                      <h3 className={styles.productName}>{product.nome}</h3>
-                      <p className={styles.productDescription}>{product.descricao}</p>
-                      <p className={styles.productPrice}>R$ {product.preco}</p>
-                    </div>
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <div>Nessun articolo trovato</div>
-            )}
-          </div>
-    
-          )}
+        
       </div>
 
       <div className={styles.menuIcon} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -163,7 +144,28 @@ const Header = () => {
       </nav>
       
     </header>
-
+    {searchValue && (
+      <div className={styles.searchResults}>
+            {searchResults.length > 0 ? (
+              searchResults.map((product) => (
+                <Link key={product.id} href={`/produto/${product.id}`} passHref>
+                  <div className={styles.searchItem}>
+                    <img src={product.imagens[0]} alt={product.nome} className={styles.productImage} />
+                    <div>
+                      <h3 className={styles.productName}>{product.nome}</h3>
+                      <p className={styles.productDescription}>{product.descricao}</p>
+                      <p className={styles.productPrice}>R$ {product.preco}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className={styles.searchItem}>Nessun articolo trovato</div>
+            )}
+          </div>
+    
+          )}
+</>
     
   );
 };

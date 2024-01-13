@@ -29,14 +29,12 @@ const Footer = () => {
           inizio
         </Rotas>
         <Rotas href="/Produtos" active={router.pathname === "/Produtos"}>
-          prodotti
+          Il mio Account
         </Rotas>
         <Rotas href="/SobreNois" active={router.pathname === "/SobreNois"}>
-          categoria
+          Carrelo
         </Rotas>
-        <Rotas href="/Contati" active={router.pathname === "/Contati"}>
-          login
-        </Rotas>       
+              
       </div>
       <div className={styles.menu}>
         <div className={styles.icons}>
@@ -64,12 +62,6 @@ const Footer = () => {
       />
       </button>
         </div>
-        <Rotas href="https://www.youtube.com/@LHWeb/featured" active={router.pathname === '/tutoriais'}>
-          tutorial
-        </Rotas>
-        <Rotas href="/Cerca" active={router.pathname === "/chisiamo"}>
-          blog
-        </Rotas>
         <Rotas href="/port" active={router.pathname === "/port"}>
           termini di utilizzo
         </Rotas>

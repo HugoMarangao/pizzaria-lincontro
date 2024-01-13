@@ -4,7 +4,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { UseContext } from '../../../../hooks/useAuth';
 import { FaHome, FaBuilding, FaQuestionCircle, } from 'react-icons/fa';
-import { FiLogOut } from 'react-icons/fi';
+import { FiLogOut,FiMenu } from 'react-icons/fi';
 
 export default function MenuUser({ activeComponent,setActiveComponent }) {
   const authInstance = getAuth();
@@ -14,6 +14,12 @@ export default function MenuUser({ activeComponent,setActiveComponent }) {
 
   const handleSetActiveComponent = (component) => {
     setActiveComponent(component);
+  };
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+    console.log(isMenuVisible)
   };
   
   const handleLogout = async () => {
@@ -26,7 +32,9 @@ export default function MenuUser({ activeComponent,setActiveComponent }) {
   };
 
   return (
-    <div className={styles.container}>
+    <>
+    <button className={styles.menuButton} onClick={toggleMenu}><FiMenu /></button>
+    <div className={`${styles.container} ${isMenuVisible ? styles.menuVisible : ''}`}>
      <h1>Benvenuto(a) {user?.nome}</h1>
      <div 
         className={`${styles.Rotas} ${activeComponent === 'principal' ? styles.active : ''}`} 
@@ -54,5 +62,6 @@ export default function MenuUser({ activeComponent,setActiveComponent }) {
         <button onClick={handleLogout}><FiLogOut/>Esci</button>
       </div>
     </div>
+    </>
   );
 }
