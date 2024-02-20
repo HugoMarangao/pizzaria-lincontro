@@ -31,7 +31,7 @@ const SignIn = () => {
         password
       );
       const userId = userCredential.user.uid;
-      console.log("Login bem-sucedido:", userCredential.user);
+      console.log("Il login è un successo:", userCredential.user);
 
       // Aqui você verifica o papel do usuário
       const userRef = doc(db, "users", userId);
@@ -48,10 +48,10 @@ const SignIn = () => {
         router.push('/Login/dashboardUser');
       }
 
-      toast.success("Login bem-sucedido!");
+      toast.success("Il login è un successo!");
     } catch (err) {
       setError(err.message);
-      toast.error("Ocorreu um erro durante o login.");
+      toast.error("Si è verificato un errore durante il login.");
     } finally {
       setIsLoading(false);
     }
@@ -77,15 +77,15 @@ const SignIn = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            placeholder="Senha"
+            placeholder="Password"
           />
         </label>
         <br />
         <button type="submit" disabled={isLoading}>
-          {isLoading ? "Carregando..." : "Entrar"}
+          {isLoading ? "Caricamento..." : "Accedi"}
         </button> {/* Alteração do texto do botão com base no estado de carregamento */}
       </form>
-      <Link href={"/Login/criarConta"}>Criar conta</Link>
+      <Link href={"/Login/criarConta"}>Crea un account</Link>
     </div>
   );
 };

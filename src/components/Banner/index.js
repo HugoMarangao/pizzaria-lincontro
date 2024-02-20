@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { IoIosSync } from 'react-icons/io'; // Importando o ícone de spinner
 import styles from './styles.module.scss';
+import { motion } from "framer-motion";
 
 export default function Banner() {
   const [bannerData, setBannerData] = useState({ url: '', text: '' });
   const [isLoading, setIsLoading] = useState(true);
+  const [y, setY] = useState(0);
 
   useEffect(() => {
     const fetchBannerData = async () => {
@@ -32,6 +34,13 @@ export default function Banner() {
   );
 
   return (
+    <motion.div
+    className={styles.imageBanner}
+    initial={{ y: -300 }} // Começa fora da tela
+    animate={{ y: 1 }}   // Anima para posição final
+    transition={{ type: "spring", stiffness: 100 }}
+    style={{ backgroundImage: `url(${bannerData.url})` }}
+  >
     <div className={styles.imageBanner} style={{ backgroundImage: `url(${bannerData.url})` }}>
       {isLoading ? (
         <Spinner />
@@ -41,5 +50,6 @@ export default function Banner() {
         </div>
       )}
     </div>
+    </motion.div>
   );
 }

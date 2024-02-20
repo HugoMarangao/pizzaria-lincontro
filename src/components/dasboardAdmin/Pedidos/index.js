@@ -63,8 +63,8 @@ const selecionarPedido = (pedido) => {
             </thead>
             <tbody>
               {currentPedidos.map((pedido) => (
-                <tr key={pedido.id} onClick={() => selecionarPedido(pedido)}>
-                  <td>{pedido.id}</td>
+                <tr key={pedido.id} >
+                  <td onClick={() => selecionarPedido(pedido)}>{pedido.id}</td>
                   <td>{pedido.cliente}</td>
                   <td>{pedido.endereco}</td>
                   <td>R$ {pedido.total}</td>

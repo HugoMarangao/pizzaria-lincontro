@@ -27,7 +27,7 @@ const SignUp = () => {
         email,
         password
       );
-      console.log("Registro bem-sucedido:", userCredential.user);
+      console.log("Registrazione riuscita:", userCredential.user);
 
       // Adicionar a nova empresa à coleção 'empresas'
       const userDocRef = doc(db, "users", userCredential.user.uid);
@@ -41,19 +41,19 @@ const SignUp = () => {
       
 
       router.push('/Login/dashboardUser');
-      toast.success("Registro bem-sucedido!");
+      toast.success("Registrazione riuscita!");
       setIsLoading(false); 
     } catch (err) {
       setError(err.message);
       console.log(err.message);
-      toast.error("Ocorreu um erro ao criar a conta. Por favor, tente novamente.");
+      toast.error("Si è verificato un errore durante la creazione dell'account. Riprova.");
       setIsLoading(false); 
     }
   };
 
   return (
     <div className={styles.container}>
-      <h1>Criar Conta</h1>
+      <h1>Crea account</h1>
       <form onSubmit={handleSubmit}>
         <label>
          
@@ -84,7 +84,7 @@ const SignUp = () => {
             value={endereco}
             onChange={(e) => setEndereco(e.target.value)}
             required
-            placeholder=" endereco"
+            placeholder=" indirizzo"
           />
         </label>
         <br/>
@@ -95,13 +95,13 @@ const SignUp = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            placeholder="Senha:"
+            placeholder="Password:"
           />
         </label>
         <br />
-        <button type="submit">{isLoading ? "Carregando..." : "Criar Conta"}</button>
+        <button type="submit">{isLoading ? "Caricamento..." : "Crea account"}</button>
       </form>
-      <Link href={'/Login/logar'}>Ja Possui uma Conta? Faca Login!</Link>
+      <Link href={'/Login/logar'}>Hai già un account? Accedi!</Link>
     </div>
   );
 };

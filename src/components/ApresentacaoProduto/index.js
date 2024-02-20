@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styles from './styles.module.scss';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { UseContext } from '@/hooks/useAuth';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 const ApresentacaoProduto = ({ produto,onAddToCart }) => {
     const { addToCart } = useContext(UseContext);
@@ -17,7 +20,19 @@ const ApresentacaoProduto = ({ produto,onAddToCart }) => {
 
   return (
     <div className={styles.apresentacaoProduto}>
-      <Swiper autoplay={true} spaceBetween={30} slidesPerView={1}>
+       <Swiper
+                spaceBetween={30}
+                slidesPerView={1}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }}
+                pagination={{
+                  clickable: true,
+                }}
+                navigation={true}
+                modules={[Autoplay, Pagination, Navigation]}
+            >
         {produto.imagens.map((imagem, index) => (
           <SwiperSlide key={index}>
             <div style={{ backgroundImage: `url(${imagem})`, backgroundSize: 'cover', height: '500px', backgroundPosition:"center" }} />

@@ -137,9 +137,9 @@
     transition: transform 0.3s ease-in-out; // Adiciona transição suave para o efeito de escala
   }
 
-  .produtoImagem:hover{
-    transform: scale(1.05); // Aumenta o tamanho do item em 5% quando o mouse está por cima
-
+  .produtoBox:hover{
+    box-shadow: 0 5px 4px rgba(0, 0, 0, 0.1); // sombra suave
+    
   }
   
   .produtoInfo {

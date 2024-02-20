@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { UseContext } from '../../hooks/useAuth';
 import PrincipalUser from "@/components/dasboardUser/Principal ";
 import PedidosUser from "@/components/dasboardUser/Pedidos";
+import Suporte from "@/components/dasboardAdmin/Suporte";
 export default function DashboardUser() {
   const { user, isLoggedIn } = useContext(UseContext);
   const router = useRouter();

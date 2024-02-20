@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { UseContext } from '../../../../hooks/useAuth';
 import { FaHome, FaBuilding, FaQuestionCircle } from 'react-icons/fa';
 import { FiLogOut, FiMenu } from 'react-icons/fi';
+import { CiPizza } from "react-icons/ci"
 
 export default function Menu({ activeComponent, setActiveComponent }) {
   const authInstance = getAuth();
@@ -49,6 +50,13 @@ export default function Menu({ activeComponent, setActiveComponent }) {
       >
         <FaBuilding className={styles.icon}/>
         <span>Ordini</span>
+      </div>
+      <div 
+        className={`${styles.Rotas} ${activeComponent === 'produtos' ? styles.active : ''}`} 
+        onClick={() => handleSetActiveComponent('produtos')}
+      >
+        <CiPizza className={styles.icon}/>
+        <span>prodotti</span>
       </div>
       <div 
         className={`${styles.Rotas} ${activeComponent === 'suporte' ? styles.active : ''}`} 

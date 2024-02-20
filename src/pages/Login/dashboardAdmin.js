@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { UseContext } from '../../hooks/useAuth';
 import Principal from "@/components/dasboardAdmin/Principal";
 import Pedidos from "@/components/dasboardAdmin/Pedidos";
+import Suporte from "@/components/dasboardAdmin/Suporte";
+import Produtos from "@/components/dasboardAdmin/Produtos";
 export default function DashboardAdmin() {
   const { user, isLoggedIn } = useContext(UseContext);
   const router = useRouter();
@@ -26,7 +28,10 @@ export default function DashboardAdmin() {
       break;
     case 'pedidos':
       Component = Pedidos;
-      break;
+    break;
+      case 'produtos':
+      Component = Produtos;
+    break;
     case 'suporte':
       Component = Suporte;
       break;

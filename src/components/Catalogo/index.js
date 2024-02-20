@@ -4,7 +4,7 @@ import { db } from '../Config/Sever/firebaseConfig';
 import { IoIosSync } from 'react-icons/io'; // Importe o ícone de spinner
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { motion } from 'framer-motion';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { useRouter } from 'next/router';
@@ -15,6 +15,10 @@ export default function Catalogo() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true); // Estado para controlar o carregamento
   const [categoriaSelecionada, setCategoriaSelecionada] = useState(''); // Estado para a categoria selecionada
+  const slideVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: { y: 0, opacity: 1 }
+  };
 
   const handleProdutoClick = (produtoId) => {
     router.push(`/produto/${produtoId}`);
@@ -134,6 +138,13 @@ export default function Catalogo() {
                   >
                 {categoria.produtos.map((produto) => (
                   <SwiperSlide key={produto.id} className={styles.swiperSlide} onClick={() => handleProdutoClick(produto.id)}>
+                   <motion.div
+                        className={styles.produtoBox}
+                        variants={slideVariants}
+                        initial="hidden"
+                        animate="visible"
+                        transition={{ duration: 0.5 }}
+                      >
                     <div className={styles.produtoBox}>
                       <div className={styles.produtoImagem} style={{ backgroundImage: `url(${produto.imagens[0]})` }}>
                       </div>
@@ -144,6 +155,7 @@ export default function Catalogo() {
                         
                       </div>
                     </div>
+                    </motion.div>
                   </SwiperSlide>
                 ))}
               </Swiper>
