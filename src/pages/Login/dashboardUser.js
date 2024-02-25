@@ -11,7 +11,7 @@ export default function DashboardUser() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("Verificando estado do usuário em DashboardAdmin:", { isLoggedIn, user });
+    console.log("Verificando estado do usuário em DashboardUser:", { isLoggedIn, user });
     if (!isLoggedIn) {
       router.push('/Login/logar');
     } else if (user && user.identifi !== "user") {

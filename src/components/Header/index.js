@@ -6,6 +6,7 @@ import Rotas from '../Config/Rotas';
 import { UseContext } from '@/hooks/useAuth';
 import { FiUser,FiSearch } from "react-icons/fi";
 import { GiShoppingBag } from "react-icons/gi";
+import { AiOutlineShopping } from "react-icons/ai";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestore,collection, setDoc, doc,getDocs,addDoc,updateDoc } from "firebase/firestore";
 import Link from 'next/link';
@@ -138,7 +139,7 @@ const Header = () => {
       {renderMyAccountLink()}
       <Rotas href="/carrinho" active={router.pathname === '/carrinho'} >
         <div style={{display:"flex", alignItems:"center",justifyContent:"center"}}>
-          <GiShoppingBag size={35}/> ({cartItems.length})
+          <AiOutlineShopping size={35}/> ({cartItems.length})
         </div>
       </Rotas>    
       </nav>

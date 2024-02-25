@@ -57,7 +57,10 @@ export const UseProvider = ({ children }) => {
         const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
         if (userDoc.exists()) {
           // Atualize o estado do usuário com as informações do Firestore
-          setUser(userDoc.data());
+          setUser({
+            ...userDoc.data(), // Dados do documento Firestore
+            uid: firebaseUser.uid // Certifique-se de incluir o UID aqui!
+          });
         } else {
           console.log("Usuário não está logado");
           // Handle the case where the document does not exist

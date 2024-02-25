@@ -35,7 +35,7 @@ const ApresentacaoProduto = ({ produto,onAddToCart }) => {
             >
         {produto.imagens.map((imagem, index) => (
           <SwiperSlide key={index}>
-            <div style={{ backgroundImage: `url(${imagem})`, backgroundSize: 'cover', height: '500px', backgroundPosition:"center" }} />
+            <div style={{ backgroundImage: `url(${imagem})`, backgroundSize: 'cover', height: '500px', backgroundPosition:"center",borderRadius:15 }} />
           </SwiperSlide>
         ))}
       </Swiper>

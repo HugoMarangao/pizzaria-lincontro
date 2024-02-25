@@ -1,5 +1,5 @@
 .apresentacaoProduto {
-   
+  background-color: #252525;
   padding: 20px;
   height: 100vh;
   margin: 0 auto;
@@ -18,14 +18,14 @@
 .NomeProduto {
     font-size: 35px;
     font-weight: bold;
-    color: #030906; /* Cor temática de pizzaria */ 
+    color: #fff; /* Cor temática de pizzaria */ 
     margin-bottom: 10px;
 }
 
 /* Estilização da Descrição do Produto */
 .DescricaoProduto {
     font-size: 20px;
-    color: #333;
+    color: #fff;
     margin-bottom: 10px;
     line-height: 1.5;
     text-align: justify;
@@ -35,7 +35,7 @@
 .precoProduto {
     font-size: 15px;
     font-weight: bold;
-    color: #030906; /* Cor verde para destacar o preço */
+    color: #fff; /* Cor verde para destacar o preço */
     margin-bottom: 20px;
     
 }
