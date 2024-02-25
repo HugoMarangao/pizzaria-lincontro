@@ -4,15 +4,59 @@ import Rotas from '../../Config/Rotas';
 import CustomModal from '@/components/Config/Modale';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestore,collection, setDoc, doc,getDocs,addDoc,updateDoc } from "firebase/firestore";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+
 import { toast } from 'react-toastify';
+import { UseContext } from '@/hooks/useAuth';
 
 export default function Principal() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const { user } = useContext(UseContext);
 
   const openModal = (content) => {
     setModalContent(content);
     setModalOpen(true);
+  };
+
+useEffect(() => {
+    // Certifique-se de que o usuário está logado
+    if (user) {
+      // Inicializar o Firebase Messaging e obter o token
+      const messaging = getMessaging();
+      getToken(messaging, { vapidKey: 'BCvHkj-SwXmLLVEQjHYnumfK46nLpA_DBddolD-k3pQfIOi0e-phTb93NeF5Vxiw31tlJcqp3YJcvEWG64D2RX8' }) // Substitua 'your-vapid-key' com sua chave VAPID
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log('Token de notificação:', currentToken);
+            // Salvar o token no Firestore
+            saveTokenToFirestore(user.uid, user.nome, currentToken);
+          } else {
+            console.log('Nenhum token disponível. Solicite permissão para gerar um.');
+          }
+        }).catch((err) => {
+          console.log('Erro ao obter o token', err);
+        });
+
+      // Ouvir mensagens enquanto a aplicação está aberta
+      onMessage(messaging, (payload) => {
+        console.log('Mensagem recebida!', payload);
+        // Tratar a mensagem recebida
+      });
+    }
+  }, [user]);
+
+  const saveTokenToFirestore = async (uid, nome, token) => {
+    try {
+      const userRef = doc(getFirestore(), "users", uid);
+      await updateDoc(userRef, {
+        notificationToken: token,
+        nome: nome // Supondo que o nome do usuário já está no documento e não mudou
+      });
+      toast.success("Token de notificação salvo com sucesso!");
+    } catch (error) {
+      toast.error("Erro ao salvar o token de notificação.");
+      console.error("Erro ao atualizar o documento do usuário:", error);
+    }
   };
 
   return (

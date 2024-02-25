@@ -12,7 +12,7 @@ import {
 } from '@stripe/react-stripe-js';
 import CustomModal from '../Config/Modale';
 import { toast } from 'react-toastify';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc,getDocs } from 'firebase/firestore';
 import { GoTrash } from "react-icons/go";
 
 export default function ApresentacaoCarrinho() {
@@ -98,9 +98,23 @@ export default function ApresentacaoCarrinho() {
       }
       console.log(data);
     if (typeof data === 'object' && data.success) { // Supondo que a resposta da API tenha uma propriedade 'success'.
-        toast.success('Obrigado por fazer parte da LH WEB');
+        toast.success('Obrigado pelo pedido');
+          const fetchAdminNotificationTokens = async () => {
+          const db = getFirestore();
+          const usersCollection = collection(db, "users");
+          const querySnapshot = await getDocs(usersCollection);
+          const adminTokens = [];
+          querySnapshot.forEach((doc) => {
+            const userData = doc.data();
+            if (userData.identifi === 'admin' && userData.notificationToken) {
+              adminTokens.push(userData.notificationToken);
+            }
+          });
+          return adminTokens;
+        };
         setModalOpen(false);
         try {
+          const adminTokens = await fetchAdminNotificationTokens();
           const db = getFirestore();
           const processedItems = processCartItemsForOrder(cartItems);
           await addDoc(collection(db, "pedidos"), {
@@ -112,6 +126,23 @@ export default function ApresentacaoCarrinho() {
             data: new Date()
           });
           clearCart(); 
+          if (adminTokens.length > 0) {
+            // Chamar a API de notificação
+            await fetch('/api/notificacoes', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                title: "Novo Pedido",
+                body: `Você tem um novo pedido: `,
+                tokens: adminTokens,
+                
+              }),
+            });
+          } else {
+            console.log("Nenhum token de admin encontrado.");
+          }
           router.push('/'); 
         } catch (error) {
           console.error("Erro ao salvar pedido:", error);
@@ -175,34 +206,28 @@ export default function ApresentacaoCarrinho() {
             }
           </div>
           <CustomModal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
-          <div className={styles.container}>
-            <div className={styles.box}>
-                {/* Renderizar o CardElement para coleta segura de detalhes */}
-                <form className={styles.form} onSubmit={handleSubmit}>                                      
-                        {/* Número do Cartão */}
-                        <CardNumberElement 
-                            className={`${styles.cardElement} ${styles.overlayElement}`}
-                          
-                        />
-                                          
-                        {/* Data de Validade */}
-                        <CardExpiryElement 
-                            className={`${styles.cardElement} ${styles.overlayElement}`}
-                      
-                        />
-                    
-                        {/* CVC */}
-                        <CardCvcElement 
-                            className={`${styles.cardElement} ${styles.overlayElement}`}
-                            
-                        />
-                    
-                    
-                    <button className={styles.button} type="submit" disabled={!stripe}>Pagar</button>
-                </form>
-            </div>
-          </div>
+              <div className={styles.paymentContainer}>
+                <div className={styles.paymentBox}>
+                  <h2 className={styles.paymentTitle}>Detalhes do Pagamento</h2>
+                  <form className={styles.paymentForm} onSubmit={handleSubmit}>                                      
+                    <label htmlFor="cardNumber">Número do Cartão</label>
+                    <CardNumberElement id="cardNumber"
+                      className={styles.cardInput}
+                    />
+                    <label htmlFor="cardExpiry">Data de Validade</label>
+                    <CardExpiryElement id="cardExpiry"
+                      className={styles.cardInput}
+                    />
+                    <label htmlFor="cardCvc">CVC</label>
+                    <CardCvcElement id="cardCvc"
+                      className={styles.cardInput}
+                    />
+                    <button className={styles.payButton} type="submit" disabled={!stripe}>Pagar</button>
+                  </form>
+                </div>
+              </div>
           </CustomModal>
+
         </div>
       ) : (
         <div className={styles.itemsContainer}>

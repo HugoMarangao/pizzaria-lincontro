@@ -133,4 +133,58 @@
     margin: 0; /* Remove margens padrão do parágrafo */
   }
   
+
+  .paymentContainer {
+    max-width: 500px; // Tamanho mais apropriado para formulários
+    margin: 0 auto; // Centraliza na página
+    padding: 50px 20px; // Espaçamento interno adequado
+    background: #fff; // Fundo claro para destaque
+    border-radius: 8px; // Bordas arredondadas suaves
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Sombra sutil para profundidade
+  }
   
+  .paymentBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center; // Centraliza os elementos no eixo cruzado
+  }
+  
+  .paymentTitle {
+    font-size: 24px; // Tamanho de fonte legível e destacado
+    color: #333; // Cor escura para contraste adequado
+    margin-bottom: 30px; // Espaço antes do formulário
+  }
+  
+  .paymentForm {
+    width: 100%; // Ocupa toda a largura do container
+  }
+  
+  .cardInput {
+    display: block; // Faz cada elemento ocupar uma linha inteira
+    width: 100%; // Ocupa toda a largura disponível
+    margin-bottom: 20px; // Espaço entre os campos de input
+    padding: 10px 15px; // Espaçamento interno para conforto na digitação
+    border: 1px solid #ccd; // Bordas sutis
+    border-radius: 4px; // Bordas arredondadas para os inputs
+    font-size: 16px; // Tamanho de fonte para legibilidade
+  }
+  
+  .payButton {
+    width: 100%; // Ocupa toda a largura do container
+    background-color: #f58f00; // Cor de destaque para ação principal
+    color: #fff; // Texto branco para contraste
+    padding: 12px; // Espaçamento interno para um toque confortável
+    border: none; // Sem bordas
+    border-radius: 4px; // Bordas arredondadas
+    cursor: pointer; // Indica a possibilidade de clique
+    font-size: 18px; // Tamanho de fonte para destaque
+    margin-top: 20px; // Espaço acima do botão
+    transition: background-color 0.3s; // Transição suave para interação
+  
+    &:hover {
+      background-color: #f58f00; // Cor mais escura ao passar o mouse
+    }
+  
+    &:disabled {
+      background-color: #ccc; // Cor neutra quando desabilitado
+    }}
