@@ -119,9 +119,10 @@ export default function ApresentacaoCarrinho() {
           const processedItems = processCartItemsForOrder(cartItems);
           await addDoc(collection(db, "pedidos"), {
             cliente: user?.nome,
+            endereco: user?.endereco,
             itens: processedItems,
             total: total,
-            statusPgamento: "Pago",
+            statusPagamento: "Pago",
             status: "preparando",
             data: new Date()
           });

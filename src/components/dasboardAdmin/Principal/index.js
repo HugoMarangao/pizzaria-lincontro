@@ -79,7 +79,7 @@ useEffect(() => {
         </div>
         <div className={styles.box1}>
             <h1>Invia una notifica</h1>
-            <button >Invia</button>
+            <button onClick={() => openModal('notificacao')}>Invia</button>
         </div>
       </div>
       <Rotas href={'/'} >
@@ -93,6 +93,8 @@ useEffect(() => {
         {modalContent === 'banner' && <BannerForm setModalOpen={setModalOpen} />}
         {modalContent === 'produto' && <ProdutoForm setModalOpen={setModalOpen}/>}
         {modalContent === 'categoria' && <CategoriaForm setModalOpen={setModalOpen}/>}
+        {modalContent === 'notificacao' && <NotificacaoForm setModalOpen={setModalOpen}/>}
+
       </CustomModal>
     </div>
   );
@@ -134,6 +136,76 @@ const BannerForm = ({ setModalOpen }) => {
       <input type="file" className={styles.inputImage} onChange={handleFileChange} />
       <input type="text" placeholder="Texto do Banner" className={styles.inputText} onChange={handleTextChange} />
       <button className={styles.button} onClick={handleSave}>Salvar</button>
+    </div>
+  );
+};
+
+
+const NotificacaoForm = ({ setModalOpen }) => {
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+
+  // Função para enviar notificação
+  const sendNotification = async (tokens) => {
+    try {
+      const response = await fetch('/api/notificacoes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          body,
+          tokens,
+          // Aqui você pode adicionar o 'image' e 'icon' se necessário
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao enviar notificação');
+      }
+
+      const data = await response.json();
+      console.log('Notificação enviada com sucesso', data);
+      toast.success('Notificação enviada com sucesso!');
+    } catch (error) {
+      console.error('Erro ao enviar notificação:', error);
+      toast.error('Erro ao enviar notificação.');
+    }
+  };
+
+  // Função para buscar tokens dos usuários e enviar notificações
+  const handleSubmit = async () => {
+    const db = getFirestore();
+    const querySnapshot = await getDocs(collection(db, "users"));
+    const tokens = [];
+
+    querySnapshot.forEach((doc) => {
+      // Adiciona tanto o token do app quanto do site, se existirem
+      if (doc.data().notificationToken) tokens.push(doc.data().notificationToken);
+      if (doc.data().notificationTokenApp) tokens.push(doc.data().notificationTokenApp);
+    });
+
+    // Enviar notificação para os tokens coletados
+    sendNotification(tokens);
+  };
+
+  return (
+    <div className={styles.ContainerModal}>
+      <input
+        type="text"
+        placeholder="Título da notificação"
+        className={styles.inputText}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <textarea
+        placeholder="Corpo da notificação"
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+        className={styles.inputTextarea}
+      ></textarea>
+      <button className={styles.button} onClick={handleSubmit}>Enviar Notificação</button>
     </div>
   );
 };
