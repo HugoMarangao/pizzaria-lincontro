@@ -89,7 +89,7 @@ useEffect(() => {
             <button onClick={() => openModal('subcategoria')}>Aggiungi Categoria</button>
         </div>
         <div className={styles.box1}>
-            <h1>Aggiungi una nuova SubCategoria</h1>
+            <h1>Aggiungi Banner ha Categoria</h1>
             <button onClick={() => openModal('bannercategoria')}>Aggiungi Banner ha Categoria</button>
         </div>
         
