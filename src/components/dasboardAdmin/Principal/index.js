@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import Rotas from '../../Config/Rotas';
 import CustomModal from '@/components/Config/Modale';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getFirestore,collection, setDoc, doc,getDocs,addDoc,updateDoc } from "firebase/firestore";
+import { getFirestore,collection, setDoc, doc,getDocs,addDoc,updateDoc,query,where } from "firebase/firestore";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 import { toast } from 'react-toastify';
@@ -66,7 +66,7 @@ useEffect(() => {
           <div className={styles.box}>
             <h1>Aggiungi un nuovo Banner</h1>
             <button onClick={() => openModal('banner')}>Aggiungi Banner</button>
-        </div>
+          </div>
         <div className={styles.box}>
             <h1>Aggiungi un nuovo Prodotto</h1>
             <button onClick={() => openModal('produto')}>Aggiungi Prodotto</button>
@@ -77,11 +77,24 @@ useEffect(() => {
             <h1>Aggiungi una nuova Categoria</h1>
             <button onClick={() => openModal('categoria')}>Aggiungi Categoria</button>
         </div>
+        
         <div className={styles.box1}>
             <h1>Invia una notifica</h1>
             <button onClick={() => openModal('notificacao')}>Invia</button>
         </div>
       </div>
+      <div className={styles.containerbox}>
+          <div className={styles.box1}>
+            <h1>Aggiungi una nuova SubCategoria</h1>
+            <button onClick={() => openModal('subcategoria')}>Aggiungi Categoria</button>
+        </div>
+        <div className={styles.box1}>
+            <h1>Aggiungi una nuova SubCategoria</h1>
+            <button onClick={() => openModal('bannercategoria')}>Aggiungi Banner ha Categoria</button>
+        </div>
+        
+      </div>
+      
       <Rotas href={'/'} >
         <div className={styles.retornar}>
           <h1>
@@ -94,7 +107,8 @@ useEffect(() => {
         {modalContent === 'produto' && <ProdutoForm setModalOpen={setModalOpen}/>}
         {modalContent === 'categoria' && <CategoriaForm setModalOpen={setModalOpen}/>}
         {modalContent === 'notificacao' && <NotificacaoForm setModalOpen={setModalOpen}/>}
-
+        {modalContent === 'subcategoria' && <SubCategoriaForm setModalOpen={setModalOpen}/>}
+        {modalContent === 'bannercategoria' && <BannerCategoriaForm setModalOpen={setModalOpen}/>}
       </CustomModal>
     </div>
   );
@@ -218,6 +232,29 @@ const ProdutoForm = ({ setModalOpen }) => {
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
   const [imagens, setImagens] = useState([]);
+  const [subcategorias, setSubcategorias] = useState([]);
+  const [subcategoriaSelecionada, setSubcategoriaSelecionada] = useState("");
+
+useEffect(() => {
+  const fetchSubCategorias = async () => {
+    const db = getFirestore();
+    // Certifique-se de que categoriaSelecionada não seja nula ou vazia
+    if (categoriaSelecionada) {
+      const subcategoriaRef = collection(db, "subcategorias");
+      const q = query(subcategoriaRef, where("categoriaId", "==", categoriaSelecionada));
+      const querySnapshot = await getDocs(q);
+      const subcategoriasFetched = [];
+      querySnapshot.forEach((doc) => {
+        subcategoriasFetched.push({ id: doc.id, ...doc.data() });
+      });
+      setSubcategorias(subcategoriasFetched);
+    } else {
+      setSubcategorias([]);
+    }
+  };
+
+  fetchSubCategorias();
+}, [categoriaSelecionada]);
 
   useEffect(() => {
     const fetchCategorias = async () => {
@@ -251,6 +288,7 @@ const ProdutoForm = ({ setModalOpen }) => {
         nome: nomeProduto,
         preco,
         categoria: categoriaSelecionada,
+        subcategoria: subcategoriaSelecionada,
         descricao
       });
   
@@ -314,6 +352,19 @@ const ProdutoForm = ({ setModalOpen }) => {
           </option>
         ))}
       </select>
+      <select
+  value={subcategoriaSelecionada}
+  onChange={(e) => setSubcategoriaSelecionada(e.target.value)}
+  className={styles.inputSelect}
+>
+  <option value="">Selecione uma subcategoria</option>
+  {subcategorias.map((subcategoria) => (
+    <option key={subcategoria.id} value={subcategoria.id}>
+      {subcategoria.nome}
+    </option>
+  ))}
+</select>
+
       <textarea
         placeholder="Descrição"
         value={descricao}
@@ -363,6 +414,162 @@ const CategoriaForm = ({ setModalOpen }) => {
         onChange={handleNomeCategoriaChange}
       />
       <button  className={styles.button} onClick={handleSave}>Salvar</button>
+    </div>
+  );
+};
+
+
+const SubCategoriaForm = ({ setModalOpen }) => {
+  const [nomeSubCategoria, setNomeSubCategoria] = useState("");
+  const [categorias, setCategorias] = useState([]);
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
+  
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      const db = getFirestore();
+      const categoriaRef = collection(db, "categorias");
+      const querySnapshot = await getDocs(categoriaRef);
+      const categoriasFetched = [];
+      querySnapshot.forEach((doc) => {
+        categoriasFetched.push({ id: doc.id, ...doc.data() });
+      });
+      setCategorias(categoriasFetched);
+    };
+  
+    fetchCategorias();
+  }, []);
+  
+  const handleNomeSubCategoriaChange = (event) => {
+    setNomeSubCategoria(event.target.value);
+  };
+
+  const handleSave = async () => {
+    if (!nomeSubCategoria || !categoriaSelecionada) {
+      toast.error("Por favor, insira um nome para a subcategoria e selecione uma categoria.");
+      return;
+    }
+  
+    const db = getFirestore();
+    try {
+      await addDoc(collection(db, "subcategorias"), {
+        nome: nomeSubCategoria,
+        categoriaId: categoriaSelecionada, // Adiciona o ID da categoria
+      });
+      toast.success("Subcategoria cadastrada com sucesso!");
+      setModalOpen(false);
+    } catch (error) {
+      toast.error("Erro ao cadastrar a subcategoria");
+      console.error("Error ao salvar subcategoria: ", error);
+    }
+  };
+  
+  
+
+  return (
+    <div className={styles.ContainerModal}>
+      <select
+        value={categoriaSelecionada}
+        onChange={(e) => setCategoriaSelecionada(e.target.value)}
+        className={styles.inputSelect}
+      >
+        <option value="">Selecione uma categoria</option>
+        {categorias.map((categoria) => (
+          <option key={categoria.id} value={categoria.id}>
+            {categoria.nome}
+          </option>
+        ))}
+      </select>
+      <input
+        type="text"
+        placeholder="Nome da SubCategoria"
+        className={styles.inputText}
+        value={nomeSubCategoria}
+        onChange={handleNomeSubCategoriaChange}
+      />
+      <button  className={styles.button} onClick={handleSave}>Salvar</button>
+    </div>
+  );
+};
+
+
+const BannerCategoriaForm = ({ setModalOpen }) => {
+  // Estado para armazenar o arquivo de imagem selecionado
+  const [file, setFile] = useState(null);
+  // Estado para as categorias e a categoria selecionada
+  const [categorias, setCategorias] = useState([]);
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
+
+  // Buscar categorias do Firestore na inicialização do componente
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      const db = getFirestore();
+      const categoriaRef = collection(db, "categorias");
+      const querySnapshot = await getDocs(categoriaRef);
+      const categoriasFetched = [];
+      querySnapshot.forEach((doc) => {
+        categoriasFetched.push({ id: doc.id, ...doc.data() });
+      });
+      setCategorias(categoriasFetched);
+    };
+
+    fetchCategorias();
+  }, []);
+
+  // Lidar com a mudança de seleção de arquivo
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  // Salvar o banner da categoria
+  const handleSave = async () => {
+    if (!file || !categoriaSelecionada) {
+      toast.error("Por favor, selecione uma categoria e um arquivo de imagem.");
+      return;
+    }
+
+    const storage = getStorage();
+    const storageRef = ref(storage, `bannersCategorias/${categoriaSelecionada}/${file.name}`);
+
+    try {
+      // Fazendo o upload do arquivo no Firebase Storage
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+      const db = getFirestore();
+
+      // Salvando a referência do banner no documento da categoria
+      const categoriaRef = doc(db, "categorias", categoriaSelecionada);
+      await updateDoc(categoriaRef, {
+        bannerUrl: url // Adicionando ou atualizando a URL do banner na categoria
+      });
+
+      toast.success("Banner da categoria criado com sucesso!");
+      setModalOpen(false);
+    } catch (error) {
+      toast.error("Erro ao criar o banner da categoria.");
+      console.error("Error ao salvar o banner: ", error);
+    }
+  };
+
+  return (
+    <div className={styles.ContainerModal}>
+      <select
+        value={categoriaSelecionada}
+        onChange={(e) => setCategoriaSelecionada(e.target.value)}
+        className={styles.inputSelect}
+      >
+        <option value="">Selecione uma categoria</option>
+        {categorias.map((categoria) => (
+          <option key={categoria.id} value={categoria.id}>
+            {categoria.nome}
+          </option>
+        ))}
+      </select>
+      <input
+        type="file"
+        onChange={handleFileChange}
+        className={styles.inputFile}
+      />
+      <button className={styles.button} onClick={handleSave}>Salvar</button>
     </div>
   );
 };
