@@ -90,7 +90,11 @@ useEffect(() => {
         </div>
         <div className={styles.box1}>
             <h1>Aggiungi Banner ha Categoria</h1>
-            <button onClick={() => openModal('bannercategoria')}>Aggiungi Banner ha Categoria</button>
+            <button onClick={() => openModal('bannercategoria')}>Aggiungi Banner ha SubCategoria</button>
+        </div>
+        <div className={styles.box1}>
+            <h1>Aggiungi products nel camponi il panino</h1>
+            <button onClick={() => openModal('itenscamponiilpanino')}>Aggiungi products nel camponi il panino</button>
         </div>
         
       </div>
@@ -109,6 +113,7 @@ useEffect(() => {
         {modalContent === 'notificacao' && <NotificacaoForm setModalOpen={setModalOpen}/>}
         {modalContent === 'subcategoria' && <SubCategoriaForm setModalOpen={setModalOpen}/>}
         {modalContent === 'bannercategoria' && <BannerCategoriaForm setModalOpen={setModalOpen}/>}
+        {modalContent === 'itenscamponiilpanino' && <ItensPaninoForm setModalOpen={setModalOpen}/>}
       </CustomModal>
     </div>
   );
@@ -153,6 +158,68 @@ const BannerForm = ({ setModalOpen }) => {
     </div>
   );
 };
+
+const ItensPaninoForm = ({ setModalOpen }) => {
+  const [categoria, setCategoria] = useState(''); // Mantenha o estado da categoria selecionada
+  const [item, setItem] = useState('');
+  const [preco, setPreco] = useState('');
+
+  const db = getFirestore();
+
+  const handleSave = async () => {
+    if (!categoria || !item || !preco) {
+      toast.error("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "itens_panino"), {
+        categoria,
+        item,
+        preco: parseFloat(preco)
+      });
+
+      toast.success("Item adicionado com sucesso!");
+      setModalOpen(false);
+    } catch (error) {
+      toast.error("Erro ao adicionar o item.");
+      console.error("Erro ao salvar no Firestore: ", error);
+    }
+  };
+
+  return (
+    <div className={styles.ContainerModal}>
+      <select
+        className={styles.inputText}
+        value={categoria}
+        onChange={(e) => setCategoria(e.target.value)}
+      >
+        <option value="">Selecione a Categoria</option>
+        <option value="SCEGLI LA CARNE">SCEGLI LA CARNE</option>
+        <option value="SCEGLI I FORMAGGI">SCEGLI I FORMAGGI</option>
+        <option value="SCEGLI I CONTORNI">SCEGLI I CONTORNI</option>
+        <option value="SCEGLI LE AGGIUNTE">SCEGLI LE AGGIUNTE</option>
+        <option value="SCEGLI LE SALSE">SCEGLI LE SALSE</option>
+      </select>
+      <input
+        type="text"
+        placeholder="Nome do Item"
+        className={styles.inputText}
+        value={item}
+        onChange={(e) => setItem(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Preço do Item"
+        className={styles.inputText}
+        value={preco}
+        onChange={(e) => setPreco(e.target.value)}
+      />
+      <button className={styles.button} onClick={handleSave}>Adicionar Item</button>
+    </div>
+  );
+};
+
 
 
 const NotificacaoForm = ({ setModalOpen }) => {
