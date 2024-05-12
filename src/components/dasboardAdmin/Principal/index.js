@@ -3,17 +3,53 @@ import styles from './styles.module.scss';
 import Rotas from '../../Config/Rotas';
 import CustomModal from '@/components/Config/Modale';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getFirestore,collection, setDoc, doc,getDocs,addDoc,updateDoc,query,where } from "firebase/firestore";
+import { getFirestore,collection, setDoc, doc,getDocs,addDoc,updateDoc,query,where,getDoc } from "firebase/firestore";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-
+import Switch from "react-switch";
 import { toast } from 'react-toastify';
 import { UseContext } from '@/hooks/useAuth';
 
 export default function Principal() {
+  const [appAtivo, setAppAtivo] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const { user } = useContext(UseContext);
 
+  useEffect(() => {
+    const fetchAppStatus = async () => {
+      if (!user) return; // Garante que temos um usuário antes de tentar buscar
+
+      const db = getFirestore();
+      const appStatusRef = doc(db, "configuracoes", "appStatus");
+      const docSnap = await getDoc(appStatusRef);
+      if (docSnap.exists()) {
+        setAppAtivo(docSnap.data().appAtivo);
+      } else {
+        // Se o documento não existir, crie-o com appAtivo = false
+        await updateDoc(appStatusRef, { appAtivo: false });
+        setAppAtivo(false);
+      }
+    };
+
+    fetchAppStatus();
+  }, [user]);
+
+  const toggleAppAtivo = async (checked) => {
+    const db = getFirestore();
+    const appStatusRef = doc(db, "configuracoes", "appStatus");
+
+    try {
+      // Usando setDoc com a opção { merge: true } para criar ou atualizar o documento
+      await setDoc(appStatusRef, { appAtivo: checked }, { merge: true });
+      setAppAtivo(checked);
+      toast.success(`App ${checked ? 'ativado' : 'desativado'} com sucesso!`);
+    } catch (error) {
+      console.error("Erro ao atualizar o status do app:", error);
+      toast.error("Erro ao alterar o status do app.");
+    }
+};
+
+  
   const openModal = (content) => {
     setModalContent(content);
     setModalOpen(true);
@@ -96,6 +132,26 @@ useEffect(() => {
             <h1>Aggiungi products nel camponi il panino</h1>
             <button onClick={() => openModal('itenscamponiilpanino')}>Aggiungi products nel camponi il panino</button>
         </div>
+
+        <div className={styles.box1}>
+          <h1>Bloquear App</h1>
+          <Switch
+          onChange={toggleAppAtivo}
+          checked={appAtivo}
+          onColor="#86d3ff"
+          onHandleColor="#2693e6"
+          handleDiameter={30}
+          uncheckedIcon={false}
+          checkedIcon={false}
+          boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+          activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+          height={20}
+          width={48}
+          className="react-switch"
+          id="material-switch"
+        />
+        </div>
+
         
       </div>
       
@@ -224,8 +280,23 @@ const ItensPaninoForm = ({ setModalOpen }) => {
 
 const NotificacaoForm = ({ setModalOpen }) => {
   const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-
+  const [message, setMessage] = useState("");
+  const saveNotificationToFirestore = async () => {
+    const db = getFirestore();
+    try {
+      await addDoc(collection(db, "notificacoes"), {
+        title,
+        message,
+        // Salva a data e hora do envio
+      });
+      console.log('Notificação salva no Firestore com sucesso!');
+      toast.success('Notificação salva com sucesso!');
+    } catch (error) {
+      console.error('Erro ao salvar notificação no Firestore:', error);
+      toast.error('Erro ao salvar notificação no Firestore.');
+    }
+  };
+  
   // Função para enviar notificação
   const sendNotification = async (tokens) => {
     try {
@@ -236,9 +307,8 @@ const NotificacaoForm = ({ setModalOpen }) => {
         },
         body: JSON.stringify({
           title,
-          body,
+          message,
           tokens,
-          // Aqui você pode adicionar o 'image' e 'icon' se necessário
         }),
       });
 
@@ -249,6 +319,8 @@ const NotificacaoForm = ({ setModalOpen }) => {
       const data = await response.json();
       console.log('Notificação enviada com sucesso', data);
       toast.success('Notificação enviada com sucesso!');
+      await saveNotificationToFirestore(); // Salvar a notificação no Firestore
+      setModalOpen(false); // Fechar o modal
     } catch (error) {
       console.error('Erro ao enviar notificação:', error);
       toast.error('Erro ao enviar notificação.');
@@ -282,8 +354,8 @@ const NotificacaoForm = ({ setModalOpen }) => {
       />
       <textarea
         placeholder="Corpo da notificação"
-        value={body}
-        onChange={(e) => setBody(e.target.value)}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
         className={styles.inputTextarea}
       ></textarea>
       <button className={styles.button} onClick={handleSubmit}>Enviar Notificação</button>

@@ -37,8 +37,9 @@ export default function Pedidos() {
 // Evento de clique para selecionar um pedido e mostrar seus itens
 const selecionarPedido = (pedido) => {
   setPedidoSelecionado(pedido);
-  openModal();
+  openModal(); // Abre o modal sem verificar se há itens
 };
+
   // Determina os pedidos para a página atual
   const indexOfLastPedido = (currentPage + 1) * pedidosPerPage;
   const indexOfFirstPedido = indexOfLastPedido - pedidosPerPage;
@@ -58,16 +59,18 @@ const selecionarPedido = (pedido) => {
                 <th>Cliente</th>
                 <th>Indirizzo</th>
                 <th>Totale</th>
+                <th>horario desejado para o pedido</th>
                 <th>Stato</th>
               </tr>
             </thead>
             <tbody>
               {currentPedidos.map((pedido) => (
                 <tr key={pedido.id} >
-                  <td onClick={() => selecionarPedido(pedido)}>{pedido.id}</td>
+                  <td style={{cursor:"pointer"}} onClick={() => selecionarPedido(pedido)}>{pedido.id}</td>
                   <td>{pedido.cliente}</td>
                   <td>{pedido.endereco}</td>
-                  <td>R$ {pedido.total}</td>
+                  <td>{pedido.total}</td>
+                  <td>{pedido.selectedHour}</td>
                   <td>
                     <select 
                       className="statusSelect" 
@@ -95,14 +98,26 @@ const selecionarPedido = (pedido) => {
                 <tr>
                   <th>Nome</th>
                   <th>Quantità</th>
+                  <th>Ingredientes</th>
                   <th>Desiderio</th>
                 </tr>
               </thead>
               <tbody>
-                {pedidoSelecionado.itens.map((item, index) => (
+                {pedidoSelecionado.items.map((item, index) => (
                   <tr key={index}>
                     <td>{item.nome}</td>
                     <td>{item.quantidade}</td>
+                    <td>
+                {item.ingredientes && item.ingredientes.length > 0 ? (
+                  item.ingredientes.map((ingrediente, i) => (
+                    <div key={i}>
+                      {ingrediente.item}: {ingrediente.preco}
+                    </div>
+                  ))
+                ) : (
+                  <span>Nenhum</span>
+                )}
+              </td>
                     <td>{item.desejo}</td>
                   </tr>
                 ))}
